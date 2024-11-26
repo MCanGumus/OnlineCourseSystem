@@ -1,8 +1,8 @@
 ﻿using CatalogService.Api.Features.Categories;
 using CatalogService.Api.Features.Courses;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 using System.Reflection;
-
 
 namespace CatalogService.Api.Repositories
 {
@@ -10,6 +10,14 @@ namespace CatalogService.Api.Repositories
     {
         public DbSet<Course> Courses { get; set; }
         public DbSet<Category> Categories { get; set; }
+
+        public static AppDbContext Create(IMongoDatabase database)
+        {
+            var optionsBuilder =
+                new DbContextOptionsBuilder<AppDbContext>().UseMongoDB(database.Client, database.DatabaseNamespace.DatabaseName);
+
+            return new AppDbContext(optionsBuilder.Options);
+        } 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
