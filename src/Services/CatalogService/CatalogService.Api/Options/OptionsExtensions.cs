@@ -9,7 +9,7 @@ namespace CatalogService.Api.Options
             services.AddOptions<MongoOptions>().BindConfiguration(nameof(MongoOptions)).ValidateDataAnnotations().ValidateOnStart();
 
             services.AddSingleton<MongoOptions>(sp => sp.GetRequiredService<IOptions<MongoOptions>>().Value);
-
+            
             return services;
         }
     }

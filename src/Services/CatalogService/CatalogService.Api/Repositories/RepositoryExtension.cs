@@ -1,4 +1,5 @@
 ﻿using CatalogService.Api.Options;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace CatalogService.Api.Repositories
@@ -10,13 +11,13 @@ namespace CatalogService.Api.Repositories
             services.AddSingleton<IMongoClient, MongoClient>(sp =>
             {
                 var options = sp.GetRequiredService<MongoOptions>();
-
+              
                 return new MongoClient(options.ConnectionString);
             });
 
-            services.AddScoped<AppDbContext>(sp =>
+            services.AddScoped(sp =>
             {
-                var mongoClient = sp.GetRequiredService<MongoClient>();
+                var mongoClient = sp.GetRequiredService<IMongoClient>();
                 var options = sp.GetRequiredService<MongoOptions>();
 
                 return AppDbContext.Create(mongoClient.GetDatabase(options.DatabaseName));
