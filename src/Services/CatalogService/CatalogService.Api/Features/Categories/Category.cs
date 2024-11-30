@@ -1,5 +1,4 @@
 ﻿using CatalogService.Api.Features.Courses;
-using CatalogService.Api.Repositories;
 
 namespace CatalogService.Api.Features.Categories
 {

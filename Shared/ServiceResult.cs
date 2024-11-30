@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Refit;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +11,13 @@ using System.Threading.Tasks;
 
 namespace Shared
 {
+    public interface IRequestByServiceResult<T> : IRequest<ServiceResult<T>>;
+    public interface IRequestByServiceResult : IRequest<ServiceResult>;
+
     public class ServiceResult
     {
         [JsonIgnore] public HttpStatusCode Status { get; set; }
-        public Microsoft.AspNetCore.Mvc.ProblemDetails? Fail { get; set; }
+        public ProblemDetails? Fail { get; set; }
         [JsonIgnore] public bool IsSuccess => Fail is null;
         [JsonIgnore] public bool IsFail => !IsSuccess;
 
@@ -27,24 +30,24 @@ namespace Shared
         {
             return new ServiceResult
             {
-                Fail = new Microsoft.AspNetCore.Mvc.ProblemDetails { Title = "Not Found", Detail = "The requested resource was not found." },
+                Fail = new ProblemDetails { Title = "Not Found", Detail = "The requested resource was not found." },
                 Status = HttpStatusCode.NotFound
             };
         }
 
-        public static ServiceResult ErrorFromProblemDetails(ApiException exception)
+        public static ServiceResult ErrorFromProblemDetails(Refit.ApiException exception)
         {
             if (string.IsNullOrEmpty(exception.Content))
             {
                 return new ServiceResult
                 {
-                    Fail = new Microsoft.AspNetCore.Mvc.ProblemDetails() { Title = exception.Message },
+                    Fail = new ProblemDetails() { Title = exception.Message },
                     Status = exception.StatusCode,
                 };
             }
 
             var problemDetails =
-                JsonSerializer.Deserialize<Microsoft.AspNetCore.Mvc.ProblemDetails>(exception.Content, new JsonSerializerOptions()
+                JsonSerializer.Deserialize<ProblemDetails>(exception.Content, new JsonSerializerOptions()
                 {
                     PropertyNameCaseInsensitive = true,
                 });
@@ -56,7 +59,7 @@ namespace Shared
             };
         }
 
-        public static ServiceResult Error(Microsoft.AspNetCore.Mvc.ProblemDetails problemDetails, HttpStatusCode statusCode)
+        public static ServiceResult Error(ProblemDetails problemDetails, HttpStatusCode statusCode)
         {
             return new ServiceResult
             {
@@ -69,7 +72,7 @@ namespace Shared
         {
             return new ServiceResult
             {
-                Fail = new Microsoft.AspNetCore.Mvc.ProblemDetails
+                Fail = new ProblemDetails
                 {
                     Title = title,
                     Detail = description,
@@ -83,7 +86,7 @@ namespace Shared
         {
             return new ServiceResult
             {
-                Fail = new Microsoft.AspNetCore.Mvc.ProblemDetails
+                Fail = new ProblemDetails
                 {
                     Title = title,
                     Status = statusCode.GetHashCode()
@@ -96,7 +99,7 @@ namespace Shared
         {
             return new ServiceResult
             {
-                Fail = new Microsoft.AspNetCore.Mvc.ProblemDetails
+                Fail = new ProblemDetails
                 {
                     Title = "Validation errors occured.",
                     Detail = "Please chect the errors property for more details",
@@ -112,40 +115,42 @@ namespace Shared
     public class ServiceResult<T> : ServiceResult
     {
         public T? Data { get; set; }
-        public string? UrlAsCreated { get; set; }
+        [JsonIgnore] public string? UrlAsCreated { get; set; }
 
-        public static ServiceResult<T> SuccessAsOk(T Data)
+        public static ServiceResult<T> SuccessAsOk(T data)
         {
             return new ServiceResult<T>
             {
                 Status = HttpStatusCode.OK,
-                Data = Data
+                Data = data
             };
         }
 
-        public static ServiceResult<T> SuccessAsCreated(T Data, string url)
+        public static ServiceResult<T> SuccessAsCreated(T data, string url)
         {
-            return new ServiceResult<T>
+            ServiceResult<T> result = new ServiceResult<T>
             {
-                UrlAsCreated = url,
                 Status = HttpStatusCode.Created,
-                Data = Data
+                Data = data,
+                UrlAsCreated = url,
             };
+
+            return result;
         }
 
-        public new static ServiceResult<T> ErrorFromProblemDetails(ApiException exception)
+        public new static ServiceResult<T> ErrorFromProblemDetails(Refit.ApiException exception)
         {
             if (string.IsNullOrEmpty(exception.Content))
             {
                 return new ServiceResult<T>
                 {
-                    Fail = new Microsoft.AspNetCore.Mvc.ProblemDetails() { Title = exception.Message },
+                    Fail = new ProblemDetails() { Title = exception.Message },
                     Status = exception.StatusCode,
                 };
             }
 
             var problemDetails =
-                JsonSerializer.Deserialize<Microsoft.AspNetCore.Mvc.ProblemDetails>(exception.Content, new JsonSerializerOptions()
+                JsonSerializer.Deserialize<ProblemDetails>(exception.Content, new JsonSerializerOptions()
                 {
                     PropertyNameCaseInsensitive = true,
                 });
@@ -157,7 +162,7 @@ namespace Shared
             };
         }
         
-        public new static ServiceResult<T> Error(Microsoft.AspNetCore.Mvc.ProblemDetails problemDetails, HttpStatusCode statusCode)
+        public new static ServiceResult<T> Error(ProblemDetails problemDetails, HttpStatusCode statusCode)
         {
             return new ServiceResult<T>
             {
@@ -170,7 +175,7 @@ namespace Shared
         {
             return new ServiceResult<T>
             {
-                Fail = new Microsoft.AspNetCore.Mvc.ProblemDetails{ 
+                Fail = new ProblemDetails{ 
                     Title = title,
                     Detail = description,
                     Status = statusCode.GetHashCode()
@@ -183,7 +188,7 @@ namespace Shared
         {
             return new ServiceResult<T>
             {
-                Fail = new Microsoft.AspNetCore.Mvc.ProblemDetails
+                Fail = new ProblemDetails
                 {
                     Title = title,
                     Status = statusCode.GetHashCode()
@@ -196,7 +201,7 @@ namespace Shared
         {
             return new ServiceResult<T>
             {
-                Fail = new Microsoft.AspNetCore.Mvc.ProblemDetails
+                Fail = new ProblemDetails
                 {
                     Title = "Validation errors occured.",
                     Detail = "Please chect the errors property for more details",

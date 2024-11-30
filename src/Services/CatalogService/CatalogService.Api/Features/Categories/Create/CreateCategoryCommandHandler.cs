@@ -1,11 +1,4 @@
-﻿using CatalogService.Api.Repositories;
-using MassTransit;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Shared;
-using System.Net;
-
-namespace CatalogService.Api.Features.Categories.Create
+﻿namespace CatalogService.Api.Features.Categories.Create
 {
     public class CreateCategoryCommandHandler(AppDbContext context) : IRequestHandler<CreateCategoryCommand, ServiceResult<CreateCategoryResponse>>
     {

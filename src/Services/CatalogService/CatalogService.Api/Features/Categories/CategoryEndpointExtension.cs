@@ -1,5 +1,6 @@
 ﻿using CatalogService.Api.Features.Categories.Create;
-using System.Runtime.CompilerServices;
+using CatalogService.Api.Features.Categories.GetAll;
+using CatalogService.Api.Features.Categories.GetById;
 
 namespace CatalogService.Api.Features.Categories
 {
@@ -7,7 +8,10 @@ namespace CatalogService.Api.Features.Categories
     {
         public static void AddCategoryGroupEndpointExt(this WebApplication app)
         {
-            app.MapGroup("api/categories").CreateCategoryGroupItemEndpoint();
+            app.MapGroup("api/categories")
+                .CreateCategoryGroupItemEndpoint()
+                .GetAllCategoryGroupItemEndpoint()
+                .GetByIdCategoryGroupItemEndpoint();
         }
         
     }
