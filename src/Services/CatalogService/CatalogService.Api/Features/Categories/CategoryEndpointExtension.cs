@@ -1,6 +1,7 @@
 ﻿using CatalogService.Api.Features.Categories.Create;
 using CatalogService.Api.Features.Categories.GetAll;
 using CatalogService.Api.Features.Categories.GetById;
+using CatalogService.Api.Features.Categories.Update;
 
 namespace CatalogService.Api.Features.Categories
 {
@@ -11,7 +12,8 @@ namespace CatalogService.Api.Features.Categories
             app.MapGroup("api/categories")
                 .CreateCategoryGroupItemEndpoint()
                 .GetAllCategoryGroupItemEndpoint()
-                .GetByIdCategoryGroupItemEndpoint();
+                .GetByIdCategoryGroupItemEndpoint()
+                .UpdateCategoryGroupItemEndpoint();
         }
         
     }
