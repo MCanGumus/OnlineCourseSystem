@@ -1,5 +1,6 @@
 using CatalogService.Api;
 using CatalogService.Api.Features.Categories;
+using CatalogService.Api.Features.Courses;
 using CatalogService.Api.Options;
 using CatalogService.Api.Repositories;
 using MediatR;
@@ -20,6 +21,7 @@ builder.Services.AddCommonService(typeof(CatalogAssembly));
 var app = builder.Build();
 
 app.AddCategoryGroupEndpointExt();
+app.AddCourseGroupEndpointExt();
 
 if (app.Environment.IsDevelopment())
 {
