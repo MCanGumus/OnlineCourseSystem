@@ -1,6 +1,5 @@
 using CatalogService.Api;
 using CatalogService.Api.Features.Categories;
-using CatalogService.Api.Features.Categories.Create;
 using CatalogService.Api.Options;
 using CatalogService.Api.Repositories;
 using MediatR;

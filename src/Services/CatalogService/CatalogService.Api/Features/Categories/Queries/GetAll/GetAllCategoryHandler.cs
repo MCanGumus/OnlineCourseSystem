@@ -1,6 +1,6 @@
 ﻿using CatalogService.Api.Features.Categories.Dto;
 
-namespace CatalogService.Api.Features.Categories.GetAll
+namespace CatalogService.Api.Features.Categories.Queries.GetAll
 {
     public class GetAllCategoryHandler(AppDbContext context, IMapper mapper) : IRequestHandler<GetAllCategoryQuery, ServiceResult<List<CategoryDto>>>
     {

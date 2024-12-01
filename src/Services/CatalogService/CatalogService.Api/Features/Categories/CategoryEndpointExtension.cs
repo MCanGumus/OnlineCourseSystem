@@ -1,7 +1,8 @@
-﻿using CatalogService.Api.Features.Categories.Create;
-using CatalogService.Api.Features.Categories.GetAll;
-using CatalogService.Api.Features.Categories.GetById;
-using CatalogService.Api.Features.Categories.Update;
+﻿using CatalogService.Api.Features.Categories.Commands.Create;
+using CatalogService.Api.Features.Categories.Commands.Delete;
+using CatalogService.Api.Features.Categories.Commands.Update;
+using CatalogService.Api.Features.Categories.Queries.GetAll;
+using CatalogService.Api.Features.Categories.Queries.GetById;
 
 namespace CatalogService.Api.Features.Categories
 {
@@ -13,7 +14,8 @@ namespace CatalogService.Api.Features.Categories
                 .CreateCategoryGroupItemEndpoint()
                 .GetAllCategoryGroupItemEndpoint()
                 .GetByIdCategoryGroupItemEndpoint()
-                .UpdateCategoryGroupItemEndpoint();
+                .UpdateCategoryGroupItemEndpoint()
+                .DeleteCategoryGroupItemEndpoint();
         }
         
     }

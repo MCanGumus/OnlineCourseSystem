@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Shared.Extensions;
 using Shared.Filters;
 
-namespace CatalogService.Api.Features.Categories.Create
+namespace CatalogService.Api.Features.Categories.Commands.Create
 {
     public static class CreateCategoryEndpoint
     {

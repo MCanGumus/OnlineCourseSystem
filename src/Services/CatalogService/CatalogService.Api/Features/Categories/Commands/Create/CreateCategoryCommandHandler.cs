@@ -1,4 +1,4 @@
-﻿namespace CatalogService.Api.Features.Categories.Create
+﻿namespace CatalogService.Api.Features.Categories.Commands.Create
 {
     public class CreateCategoryCommandHandler(AppDbContext context) : IRequestHandler<CreateCategoryCommand, ServiceResult<CreateCategoryResponse>>
     {

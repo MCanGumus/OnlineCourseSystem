@@ -1,6 +1,6 @@
 ﻿using CatalogService.Api.Features.Categories.Dto;
 
-namespace CatalogService.Api.Features.Categories.GetById
+namespace CatalogService.Api.Features.Categories.Queries.GetById
 {
     public class GetByIdCategoryHandler(AppDbContext context, IMapper mapper) : IRequestHandler<GetByIdCategoryQuery, ServiceResult<CategoryDto>>
     {

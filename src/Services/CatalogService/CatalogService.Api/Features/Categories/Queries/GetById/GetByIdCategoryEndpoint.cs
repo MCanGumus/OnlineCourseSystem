@@ -1,4 +1,5 @@
-﻿namespace CatalogService.Api.Features.Categories.GetById
+﻿
+namespace CatalogService.Api.Features.Categories.Queries.GetById
 {
     public static class GetByIdCategoryEndpoint
     {

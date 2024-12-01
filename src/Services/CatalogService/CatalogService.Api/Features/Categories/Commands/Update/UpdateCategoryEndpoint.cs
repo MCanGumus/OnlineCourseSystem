@@ -1,7 +1,6 @@
-﻿using CatalogService.Api.Features.Categories.Create;
-using Shared.Filters;
+﻿using Shared.Filters;
 
-namespace CatalogService.Api.Features.Categories.Update
+namespace CatalogService.Api.Features.Categories.Commands.Update
 {
     public static class UpdateCategoryEndpoint
     {

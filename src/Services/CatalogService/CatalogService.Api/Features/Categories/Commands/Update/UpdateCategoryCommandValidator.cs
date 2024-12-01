@@ -1,6 +1,5 @@
-﻿using CatalogService.Api.Features.Categories.Create;
-
-namespace CatalogService.Api.Features.Categories.Update
+﻿
+namespace CatalogService.Api.Features.Categories.Commands.Update
 {
     public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCommand>
     {
