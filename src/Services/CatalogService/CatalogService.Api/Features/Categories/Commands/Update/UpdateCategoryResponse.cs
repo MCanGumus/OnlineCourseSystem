@@ -1,4 +1,4 @@
 ﻿namespace CatalogService.Api.Features.Categories.Commands.Update
 {
-    public class UpdateCategoryResponse(Guid Id, string Name);
+    public record UpdateCategoryResponse(Guid Id, string Name);
 }

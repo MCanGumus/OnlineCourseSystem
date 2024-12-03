@@ -1,3 +1,4 @@
+using Asp.Versioning.Builder;
 using CatalogService.Api;
 using CatalogService.Api.Features.Categories;
 using CatalogService.Api.Features.Courses;
@@ -7,6 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using Shared.Extensions;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,8 @@ builder.Services.AddDatabaseServiceExtension();
 
 builder.Services.AddCommonService(typeof(CatalogAssembly));
 
+builder.Services.AddVersioningExtension();
+
 var app = builder.Build();
 
 app.AddSeedData().ContinueWith(x =>
@@ -25,8 +29,8 @@ app.AddSeedData().ContinueWith(x =>
     Console.WriteLine(x.IsFaulted ? x.Exception?.Message : "Seed data has been saved successfully.");
 });
 
-app.AddCategoryGroupEndpointExt();
-app.AddCourseGroupEndpointExt();
+app.AddCategoryGroupEndpointExt(app.AddVersionSetExtension());
+app.AddCourseGroupEndpointExt(app.AddVersionSetExtension());
 
 if (app.Environment.IsDevelopment())
 {

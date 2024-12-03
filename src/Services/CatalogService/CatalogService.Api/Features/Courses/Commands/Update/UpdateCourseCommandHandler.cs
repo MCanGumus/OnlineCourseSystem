@@ -2,7 +2,7 @@
 
 namespace CatalogService.Api.Features.Courses.Commands.Update
 {
-    public class UpdateCourseCommandHandler(AppDbContext context, IMapper mapper) : IRequestHandler<UpdateCourseCommand, ServiceResult>
+    public class UpdateCourseCommandHandler(AppDbContext context) : IRequestHandler<UpdateCourseCommand, ServiceResult>
     {
         public async Task<ServiceResult> Handle(UpdateCourseCommand request, CancellationToken cancellationToken)
         {

@@ -8,7 +8,7 @@ namespace CatalogService.Api.Features.Courses.Commands.Create
         public static RouteGroupBuilder CreateCourseGroupItemEndpoint(this RouteGroupBuilder group)
         {
             group.MapPost("/createcourse", async (CreateCourseCommand command, IMediator mediator)
-                => (await mediator.Send(command)).ToGenericResult()).AddEndpointFilter<ValidationFilter<CreateCourseCommand>>();
+                => (await mediator.Send(command)).ToGenericResult()).AddEndpointFilter<ValidationFilter<CreateCourseCommand>>().MapToApiVersion(1, 0);
 
             return group;
         }

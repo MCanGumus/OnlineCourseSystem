@@ -1,6 +1,6 @@
 ﻿namespace CatalogService.Api.Features.Categories.Commands.Update
 {
-    public class UpdateCategoryCommandHandler(AppDbContext context, IMapper mapper) : IRequestHandler<UpdateCategoryCommand, ServiceResult<UpdateCategoryResponse>>
+    public class UpdateCategoryCommandHandler(AppDbContext context) : IRequestHandler<UpdateCategoryCommand, ServiceResult<UpdateCategoryResponse>>
     {
         public async Task<ServiceResult<UpdateCategoryResponse>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
